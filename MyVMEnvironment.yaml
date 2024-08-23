@@ -1,3 +1,13 @@
+trigger:
+- main  # Replace with your branch if different
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  environmentName: ${{ parameters.environmentName }}
+  serviceName: ${{ parameters.serviceName }}
+
 jobs:
 - deployment: DeployToVM
   displayName: 'Deploy to Virtual Machine'
@@ -6,4 +16,14 @@ jobs:
     runOnce:
       deploy:
         steps:
-        - script: echo Deploying to VM
+        - task: PowerShell@2
+          displayName: 'Restart NAV Server Instance'
+          inputs:
+            targetType: 'inline'
+            script: |
+              param(
+                [string]$serviceName
+              )
+              Restart-Service -Name $serviceName
+          env:
+            serviceName: $(serviceName)
