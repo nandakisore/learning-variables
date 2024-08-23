@@ -1,0 +1,9 @@
+jobs:
+- deployment: DeployToVM
+  displayName: 'Deploy to Virtual Machine'
+  environment: 'MyVMEnvironment'
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - script: echo Deploying to VM
