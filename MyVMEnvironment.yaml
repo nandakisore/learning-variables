@@ -4,7 +4,6 @@ variables:
   - name: variable1
   - name: variable2
 
-
 jobs:
 - job: Build
   pool:
