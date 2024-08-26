@@ -1,29 +1,25 @@
-trigger:
-- main  # Replace with your branch if different
-
-pool:
-  vmImage: 'windows-latest'
+trigger: none
 
 variables:
-  environmentName: ${{ parameters.environmentName }}
-  serviceName: ${{ parameters.serviceName }}
+  - name: variable1
+    type: string
+  - name: variable2
+    type: string
 
 jobs:
-- deployment: DeployToVM
-  displayName: 'Deploy to Virtual Machine'
-  environment: 'MyVMEnvironment'
-  strategy:
-    runOnce:
-      deploy:
-        steps:
-        - task: PowerShell@2
-          displayName: 'Restart NAV Server Instance'
-          inputs:
-            targetType: 'inline'
-            script: |
-              param(
-                [string]$serviceName
-              )
-              Restart-Service -Name $serviceName
-          env:
-            serviceName: $(serviceName)
+- job: Build
+  pool:
+    name: Default
+  steps:
+  - script: |
+      echo "Variable 1: $(variable1)"
+      echo "Variable 2: $(variable2)"
+      # Sample REST API call to retrieve VM name and service name
+      #curl "https://your-api-endpoint" | jq '.vmName, .serviceName' > output.json
+      # Further steps to parse output.json can be added here
+    displayName: 'Run Script and Fetch Data'
+  - task: PublishPipelineArtifact@1
+    inputs:
+      artifactName: output
+      targetPath: $(System.DefaultWorkingDirectory)/output.json
+    displayName: 'Publish Output Artifact'
