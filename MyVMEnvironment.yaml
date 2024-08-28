@@ -1,8 +1,8 @@
 trigger: none
 
 variables:
-  - name: variable1
-  - name: variable2
+  - name: Server_name
+  - name: Service_name
 
 jobs:
 - job: Build
@@ -10,11 +10,8 @@ jobs:
     name: Default
   steps:
   - script: |
-      echo "Variable 1: $(variable1)"
-      echo "Variable 2: $(variable2)"
-      # Sample REST API call to retrieve VM name and service name
-      #curl "https://your-api-endpoint" | jq '.vmName, .serviceName' > output.json
-      # Further steps to parse output.json can be added here
+      echo "Variable 1: $(Server_name)"
+      echo "Variable 2: $(Service_name)"
     displayName: 'Run Script and Fetch Data'
   - task: PublishPipelineArtifact@1
     inputs:
