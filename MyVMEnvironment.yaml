@@ -7,7 +7,7 @@ variables:
 jobs:
 - job: Build
   pool:
-    name: Default
+    name: Pipeline
   steps:
   - script: |
       echo "Variable 1: $(Server_name)"
