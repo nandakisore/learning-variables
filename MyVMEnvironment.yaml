@@ -8,6 +8,7 @@ jobs:
 - job: Build
   pool:
     name: Pipeline
+    agent: DGA1AXST3IB
   steps:
   - script: |
       echo "Variable 1: $(Server_name)"
